@@ -7,21 +7,16 @@ from flask import Flask, request, redirect, url_for, render_template, flash, jso
 from model import model
 import re
 import base64
-from scipy.misc import imread, imresize
 import tensorflow as tf
 
-
-UPLOAD_FOLDER = '/images'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 
 # Parse Image   
 def parseImage(imgData):
     imgstr = re.search(b'base64,(.*)', imgData).group(1)
-    with open('static/images/ImageResult.png','wb') as output:
+    with open('static/images/TestImage.png','wb') as output:
         output.write(base64.decodebytes(imgstr))
 
 @app.route('/', methods=['GET', 'POST'])
@@ -31,8 +26,14 @@ def root():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    # Read Image from request
     # Parse the image into the folder before read
     parseImage(request.get_data())
+    # Format image properly
+    # Run model
+    # Return result
+
+    return app.send_static_file('index.html')
 
 
 if __name__ == '__main__':

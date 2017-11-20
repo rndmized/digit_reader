@@ -52,7 +52,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
   <script>
-    var myFile;
     // Get a reference to the file select input field
     var fileChooser = document.getElementById('fileChooser');
 
@@ -108,18 +107,20 @@
     $("#fileInput").change(function () {
       readURL(this);
       handleFileSelect(this);
-      myFile = $('#fileInput').prop('files')[0];
-      console.log(myFile);
     });
 
 
     $("#submit").click(function (e) {
       e.preventDefault();
+      var canvas = document.getElementById("canvas");
+      var image = canvas.toDataURL('image/png');
       $.ajax({
         type: "POST",
         url: "/upload",
-        data: image_file,
-        success: null
+        data: image,
+        success: function(data){
+          console.log("Yay!");
+        }
       });
     });
   </script>
