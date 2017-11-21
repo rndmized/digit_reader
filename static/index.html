@@ -89,6 +89,7 @@
       image.onload = function () {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image,0,0,550,400);
       }
 
@@ -120,6 +121,7 @@
         data: image,
         success: function(data){
           console.log("Yay!");
+          console.log(data);
         }
       });
     });

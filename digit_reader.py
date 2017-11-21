@@ -14,7 +14,17 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
+x = tf.placeholder("float", [None, 784])
+sess = tf.Session()
 
+with tf.variable_scope("deep-learning"):
+    keep_prob = tf.placeholder("float")
+    y2, variables = model.mmodel(x, keep_prob)
+save = tf.train.Saver(variables)
+save.restore(sess, "model/deep-learning.ckpt")
+
+def testModel(image):
+    return sess.run(y2, feed_dict={x: image, keep_prob: 1.0}).flatten().tolist()
 
 # Parse Image - Handed out by a classmate
 def parseImage(imgData):
@@ -27,7 +37,7 @@ def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
     # Read Image from request
     # Parse the image into the folder before read
@@ -46,10 +56,10 @@ def upload_file():
     # Display Image for testing purposes
     bw.show()
     # Run model
-
+    test_image = ((255 - np.array(bw, dtype=np.uint8)) / 255.0).reshape(1, 784)
+    result = testModel(test_image)
     # Return result
-
-    return app.send_static_file('index.html')
+    return jsonify(result=result)
 
 
 if __name__ == '__main__':
