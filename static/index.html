@@ -123,8 +123,6 @@
           url: "/upload",
           data: image,
           success: function (data) {
-            console.log("Yay!");
-            console.log(data);
             $('.blockquote-footer').text(data.result)
           }
         });
