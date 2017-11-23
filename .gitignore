@@ -104,3 +104,5 @@ ENV/
 MNIST_data/
 
 model/model-tester\.py
+
+static/images/
