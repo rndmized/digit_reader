@@ -2,11 +2,9 @@
 # Adapted from / References:
 # https://stackoverflow.com/questions/18777873/convert-rgb-to-black-or-white
 
-import os
 import numpy as np
 import PIL.Image as pil
-import PIL.ImageOps as pilOps
-from flask import Flask, request, redirect, url_for, render_template, flash, json, jsonify
+from flask import Flask, request, redirect, url_for, render_template, json, jsonify
 from model import model
 import re
 import base64
