@@ -19,12 +19,13 @@ sess = tf.Session()
 
 with tf.variable_scope("deep-learning"):
     keep_prob = tf.placeholder("float")
-    y2, variables = model.mmodel(x, keep_prob)
+    y, variables = model.mmodel(x, keep_prob)
 save = tf.train.Saver(variables)
 save.restore(sess, "model/deep-learning.ckpt")
 
-def testModel(image):
-    return sess.run(y2, feed_dict={x: image, keep_prob: 1.0}).flatten().tolist()
+def predict(image):
+    prediction = tf.argmax(y, 1)
+    return prediction.eval(feed_dict={x: image,keep_prob: 1.0}, session=sess)
 
 # Parse Image - Handed out by a classmate
 def parseImage(imgData):
@@ -47,19 +48,11 @@ def upload_file():
     image = pil.open('static/images/TestImage.png')
     # Resize Image
     image = image.resize([28,28],resample=pil.LANCZOS)
-    # Convert to Grayscale
     image_gray = image.convert(mode='L')
-    # Invert Colors
-    image_gray = pilOps.invert(image_gray)
-    # Clean thresholds
-    bw = image_gray.point(lambda x: 0 if x<128 else 255, '1')
-    # Display Image for testing purposes
-    bw.show()
-    # Run model
-    test_image = ((255 - np.array(bw, dtype=np.uint8)) / 255.0).reshape(1, 784)
-    result = testModel(test_image)
-    # Return result
-    return jsonify(result=result)
+    test_image = np.ndarray.flatten(np.array(image_gray)).reshape(1, 784)
+    print(test_image)
+    result = predict(test_image)
+    return jsonify(result = str(result[0]))
 
 
 if __name__ == '__main__':
