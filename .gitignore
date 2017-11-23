@@ -102,3 +102,5 @@ ENV/
 .mypy_cache/
 
 MNIST_data/
+
+model/model-tester\.py
