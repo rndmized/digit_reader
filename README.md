@@ -51,6 +51,19 @@ That will start the server on [localhost:5000](http://localhost:5000/)
 The server (backend) uses flask to create a minimal API with two routes: 
 * root: returns the html page to be rendered.
 * "/upload": Requires POST method. Provided the image sent is the correct type (that should be handled by the javascrip in the front-end) it formats the image to aproximate it to the MNIST format and then uses the model to output back to the front-end the value that represents such image.
+
+Python files in repository are structured as following:
+* **digit_reader.py**: Server file.
+* **model**: 
+    * **model.py**: Python file containing a function for the actual model.
+    * **model-trainer.py**: Python file used to train the model and save the results. Due to the long time it takes to train the model it is better to train it onece and save the results to avoid retraining every time the app is used.
+    * **deep-learning.ckpt.index** and **deep-learning.ckpt.data-00000-of-00001**: Files storing the results of the training. It will be loaded when server starts avoiding the user to wait for the model to be trained every time the app is started.
+* **static**: Folder containing files to be served to the front-end.
+    * **index.html**: HTML page to render.
+    * **js**: Folder containing script for image uploading and ajax calls.
+    * **css**: Folder containing HTML styling. (No styles defined)
+* **Image Samples**: Folder containing image samples to test the app.
+
 ### Front-end
 
 <p align="center">
