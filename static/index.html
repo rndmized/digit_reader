@@ -50,86 +50,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-  <script>
-    var isImageLoaded = false;
-    // Get a reference to the file select input field
-    var fileChooser = document.getElementById('fileChooser');
+  <script src="static/js/script.js"></script>
 
-    function handleFileSelect(event) {
-      // Get the FileList object from the file select event
-      var files = event.files;
-
-      // Check if there are files in the FileList
-      if (files.length === 0) {
-        return;
-      }
-
-      // For this example we only want one image. We'll take the first.
-      var file = files[0];
-
-      // Check that the file is an image
-      if (file.type !== '' && !file.type.match('image.*')) {
-        return;
-      }
-
-      // The URL API is vendor prefixed in Chrome
-      window.URL = window.URL || window.webkitURL;
-
-      // Create a data URL from the image file
-      var imageURL = window.URL.createObjectURL(file);
-
-      loadAndDrawImage(imageURL);
-    }
-
-    function loadAndDrawImage(url) {
-      // Create an image object. This is not attached to the DOM and is not part of the page.
-      var image = new Image();
-
-      // When the image has loaded, draw it to the canvas
-      image.onload = function () {
-        var canvas = document.getElementById("canvas");
-        var context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        isImageLoaded = true;
-      }
-
-      // Now set the source of the image that we want to load
-      image.src = url;
-    }
-
-
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    $("#fileInput").change(function () {
-      readURL(this);
-      handleFileSelect(this);
-      $('.blockquote-footer').text('')
-    });
-
-
-    $("#submit").click(function (e) {
-      e.preventDefault();
-      if (isImageLoaded) {
-        var canvas = document.getElementById("canvas");
-        var image = canvas.toDataURL('image/png');
-        $.ajax({
-          type: "POST",
-          url: "/upload",
-          data: image,
-          success: function (data) {
-            $('.blockquote-footer').text(data.result)
-          }
-        });
-      }
-    });
-  </script>
-  <!-- Adapted from/ References -->
+  <!-- Adapted from / References -->
   <!-- https://stackoverflow.com/questions/18457340/how-to-preview-selected-image-in-input-type-file-in-popup-using-jquery -->
   <!-- https://stackoverflow.com/questions/12281775/get-data-from-file-input-in-jquery -->
   <!-- https://webplatform.github.io/docs/concepts/programming/drawing_images_onto_canvas/ -->

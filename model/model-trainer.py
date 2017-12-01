@@ -8,20 +8,23 @@ import os
 from tensorflow.examples.tutorials.mnist import input_data
 data = input_data.read_data_sets("/tmp/data/", one_hot=True)
 
-# model
+# Load Model
 with tf.variable_scope("deep-learning"):
     x = tf.placeholder(tf.float32, [None, 784])
     keep_prob = tf.placeholder(tf.float32)
     y, variables = model.mmodel(x, keep_prob)
 
-# train
+# Training Model
 y_ = tf.placeholder(tf.float32, [None, 10])
 cross_entropy = -tf.reduce_sum(y_ * tf.log(y))
 train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
+#
 save = tf.train.Saver(variables)
+
+# Train the model
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     for i in range(20000):
@@ -33,6 +36,7 @@ with tf.Session() as sess:
 
     print(sess.run(accuracy, feed_dict={x: data.test.images, y_: data.test.labels, keep_prob: 1.0}))
 
+    # Save training file.
     path = save.save(
         sess, os.path.join('./model', 'deep-learning.ckpt'),
         write_meta_graph=False, write_state=False)
