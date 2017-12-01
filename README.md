@@ -44,10 +44,19 @@ That will start the server on [localhost:5000](http://localhost:5000/)
 ***
 
 ### Back-end
+<p align="center">
+<img src="https://www.oakcity.io/wp-content/uploads/2017/04/flask-logo-overview-oak-city-labs-mobile-app-development-company-raleigh-durham.png" width="350"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/TensorFlowLogo.png" width="250">
+</p>
+
 The server (backend) uses flask to create a minimal API with two routes: 
 * root: returns the html page to be rendered.
 * "/upload": Requires POST method. Provided the image sent is the correct type (that should be handled by the javascrip in the front-end) it formats the image to aproximate it to the MNIST format and then uses the model to output back to the front-end the value that represents such image.
 ### Front-end
+
+<p align="center">
+<img src="https://bilalamjad.net/wp-content/uploads/2015/07/bs.png" width="225"><img src="https://cms-assets.tutsplus.com/uploads/users/71/courses/916/preview_image/jquery-3.png" width="260">
+</p>
+
 The front-end is an HTML page where the user can upload an image (PNG) and send it to the server in order to get back the digit the image represents. In order to get maximum accuracy the digit in the image must be clear, centered, and avoid as much as possible noise in the image.
 
 ## Built with
