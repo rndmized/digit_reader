@@ -8,7 +8,7 @@ Project for Emerging Technologies Module (4th Year, Bsc (Hons) in Software Devel
 
 This is a simple web application built in flask that allows a user to upload an image of single digit and get the recognised number in return. It uses the model for deep learning presented on the tensorflow [tutorial](https://www.tensorflow.org/get_started/mnist/pros) that has an expected accuracy of 99.2%. However, even though that is true for images belonging to the MNIST test set (or even the training set) the images uploaded by the user might not have enough quality or might be not centered reducing the accuracy of the model. Some sample images are provided for testing in the Image Samples folder.
 
-[!]()
+![Example GIF](https://github.com/rndmized/digit_reader/blob/master/Assets/Example.gif)
 
 ## Requirements
 ***
